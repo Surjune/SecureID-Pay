@@ -1,16 +1,7 @@
-# Authentication service
-import hashlib
-import secrets
-import uuid
-from datetime import datetime, timedelta
-from typing import Optional
-import jwt
-from app.models import UserModel
-from app.schemas import UserCreate, UserResponse
-from sqlalchemy.orm import Session
+import os
 
-SECRET_KEY = "your-secret-key-change-in-production"
-ALGORITHM = "HS256"
+SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-change-in-production")
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
 ACCESS_TOKEN_EXPIRE_MINUTES = 7 * 24 * 60  # 7 days
 
 class AuthService:
