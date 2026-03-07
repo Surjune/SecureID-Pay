@@ -1,0 +1,9 @@
+{
+  "name": "secureid-pay",
+  "version": "0.1.0",
+  "description": "SecureID-Pay - Fintech platform for secure payments and lending",
+  "private": true,
+  "workspaces": [
+    "frontend"
+  ]
+}

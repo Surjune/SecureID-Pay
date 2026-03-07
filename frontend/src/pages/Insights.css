@@ -1,0 +1,200 @@
+.insights-page {
+  padding: 20px;
+}
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  margin: 0 0 5px 0;
+  font-size: 2rem;
+  color: #1f2937;
+}
+
+.page-header p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 1.05rem;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+  font-size: 1.1rem;
+}
+
+.insights-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+}
+
+.main-widget {
+  grid-column: 1;
+}
+
+.side-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tips-card,
+.score-card {
+  height: 100%;
+}
+
+.tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tip-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.tip-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.tip-item p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.financial-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.score-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  margin-bottom: 15px;
+}
+
+.score-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.score-label {
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.score-message {
+  margin: 0;
+  color: #22c55e;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 1024px) {
+  .insights-container {
+    grid-template-columns: 1fr;
+  }
+
+  .main-widget {
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .insights-container {
+    grid-template-columns: 1fr;
+  }
+
+  .side-cards {
+    order: 2;
+  }
+
+  .main-widget {
+    order: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .insights-page {
+    padding: 15px;
+  }
+
+  .page-header {
+    margin-bottom: 20px;
+  }
+
+  .page-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .page-header p {
+    font-size: 0.9rem;
+  }
+
+  .insights-container {
+    gap: 15px;
+  }
+
+  .side-cards {
+    gap: 15px;
+  }
+
+  .tips-list {
+    gap: 12px;
+  }
+
+  .tip-item {
+    gap: 10px;
+  }
+
+  .tip-icon {
+    font-size: 1.1rem;
+  }
+
+  .tip-item p {
+    font-size: 0.9rem;
+  }
+
+  .score-circle {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 12px;
+  }
+
+  .score-number {
+    font-size: 2rem;
+  }
+
+  .score-label {
+    font-size: 0.8rem;
+  }
+
+  .score-message {
+    font-size: 0.9rem;
+  }
+}
