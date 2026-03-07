@@ -1,4 +1,13 @@
 import os
+import hashlib
+import secrets
+import uuid
+import jwt
+from datetime import datetime, timedelta
+from typing import Optional
+from sqlalchemy.orm import Session
+from app.models import UserModel
+from app.schemas import UserCreate
 
 SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-change-in-production")
 ALGORITHM = os.getenv("ALGORITHM", "HS256")

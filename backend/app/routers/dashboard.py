@@ -136,7 +136,7 @@ async def get_credit_score(
     db: Session = Depends(get_db)
 ):
     """Get user's credit score"""
-    score = CreditScoringService.calculate_credit_score(db, user_id)
+    score = CreditService.calculate_credit_score(db, user_id)
     
     return {
         "user_id": user_id,

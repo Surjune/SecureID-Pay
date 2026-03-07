@@ -16,21 +16,10 @@ app = FastAPI(
     version="0.1.0"
 )
 
-import os
-
 # CORS middleware
-frontend_url = os.getenv("FRONTEND_URL", "")
-origins = [
-    "http://localhost:3000", 
-    "http://localhost:5173", 
-    "http://localhost:5174"
-]
-if frontend_url:
-    origins.append(frontend_url)
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -60,7 +49,12 @@ async def read_root():
         "status": "operational"
     }
 
-# Health check
+# Health checks
+@app.get("/health", tags=["Health"])
+@app.get("/healthz", tags=["Health"])
+async def health():
+    return {"status": "ok"}
+
 @app.get("/api/health", tags=["Health"])
 async def health_check():
     return {
