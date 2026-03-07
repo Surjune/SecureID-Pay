@@ -4,11 +4,14 @@ declare global {
   interface ImportMeta {
     env: {
       VITE_API_BASE_URL?: string;
+      VITE_API_URL?: string;
     };
   }
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+const envApiUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL;
+const parsedApiUrl = envApiUrl ? (envApiUrl.endsWith('/api') ? envApiUrl : `${envApiUrl}/api`) : 'http://localhost:8000/api';
+const API_BASE_URL = parsedApiUrl;
 
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,

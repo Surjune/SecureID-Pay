@@ -92,7 +92,7 @@ Visit `http://localhost:5173` in your browser.
 ```bash
 cd backend
 pip install -r requirements.txt
-python -m app.main
+python run.py
 ```
 
 API will be available at `http://localhost:8000`

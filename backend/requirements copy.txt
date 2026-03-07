@@ -1,0 +1,19 @@
+# FastAPI web framework and server
+fastapi==0.104.0
+uvicorn==0.24.0
+python-multipart==0.0.6
+
+# Database ORM
+sqlalchemy==2.0.20
+
+# Data validation and parsing
+pydantic==2.4.0
+email-validator==2.0.0
+
+# Authentication and security
+python-jose==3.3.0
+passlib==1.7.4
+pyjwt==2.8.0
+
+# Environment variables
+python-dotenv==1.0.0
