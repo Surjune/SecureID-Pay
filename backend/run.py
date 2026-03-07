@@ -11,19 +11,20 @@ Usage:
 import uvicorn
 import sys
 import argparse
+import os
 
 def main():
     parser = argparse.ArgumentParser(description="SecureID-Pay Development Server")
-    parser.add_argument("--host", default="127.0.0.1", help="Host to bind to")
-    parser.add_argument("--port", type=int, default=8000, help="Port to bind to")
-    parser.add_argument("--reload", action="store_true", default=True, help="Enable auto-reload")
+    parser.add_argument("--host", default=os.environ.get("HOST", "0.0.0.0"), help="Host to bind to")
+    parser.add_argument("--port", type=int, default=int(os.environ.get("PORT", 8000)), help="Port to bind to")
+    parser.add_argument("--reload", action="store_true", default=False, help="Enable auto-reload")
     parser.add_argument("--workers", type=int, default=1, help="Number of workers")
     
     args = parser.parse_args()
     
     print(f"Starting SecureID-Pay API on {args.host}:{args.port}")
-    print(f"Interactive docs: http://{args.host}:{args.port}/docs")
-    print(f"ReDoc: http://{args.host}:{args.port}/redoc")
+    if args.host in ("127.0.0.1", "localhost", "0.0.0.0"):
+        print(f"Interactive docs: http://localhost:{args.port}/docs")
     
     uvicorn.run(
         "app.main:app",
