@@ -46,7 +46,10 @@ class MockApiService {
     statusFilter?: string
   ) {
     try {
-      const params: any = { skip, limit };
+      const params: any = { 
+        skip: Math.max(skip ?? 0, 0),
+        limit: Math.max(limit ?? 20, 1)
+      };
       if (userId) params.user_id = userId;
       if (statusFilter) params.status_filter = statusFilter;
 

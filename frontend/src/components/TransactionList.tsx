@@ -34,7 +34,7 @@ const TransactionList: React.FC<TransactionListProps> = ({
   const { data: apiData, loading: apiLoading } = useTransactions(
     fetchFromApi
       ? { skip, limit, userId, statusFilter, refetchInterval: 10000 }
-      : { skip: 0, limit: 0 } // Disabled if not fetching from API
+      : { skip: 0, limit: 20 } // Default valid limit even when not fetching from API
   );
 
   // Use API data if fetching, otherwise use provided transactions
