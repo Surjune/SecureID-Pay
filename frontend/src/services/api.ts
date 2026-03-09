@@ -57,8 +57,13 @@ export const paymentsService = {
     apiClient.post('/payment/send', data),
   
   getTransactions: (limit?: number, offset?: number) =>
-    apiClient.get('/transactions', { params: { limit, offset } }),
-  
+  apiClient.get('/transactions', {
+    params: {
+      limit: limit && limit > 0 ? limit : 20,
+      skip: offset ?? 0
+    }
+  }),
+
   getTransaction: (id: string) =>
     apiClient.get(`/transactions/${id}`),
 };
