@@ -1,7 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
 
-// Configure API base URL
-const API_BASE_URL = 'http://localhost:8000/api';
+// Configure API base URL with environment variable support
+const envApiUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL;
+const API_BASE_URL = envApiUrl ? (envApiUrl.endsWith('/api') ? envApiUrl : `${envApiUrl}/api`) : 'http://localhost:8000/api';
 
 class MockApiService {
   private api: AxiosInstance;
