@@ -53,7 +53,12 @@ export function useTransactions(options: UseQueryOptions & { userId?: string; st
   const fetchData = async () => {
     try {
       setLoading(true);
-      const result = await mockApi.fetchTransactions(skip, limit, userId, statusFilter);
+      const result = await mockApi.fetchTransactions(
+  skip ?? 0,
+  Math.max(limit ?? 20, 1),
+  userId,
+  statusFilter
+);
       setData(result);
       setError(null);
     } catch (err) {
