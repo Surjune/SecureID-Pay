@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './Sidebar.css';
 
@@ -20,18 +20,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
   const location = useLocation();
   const [hovered, setHovered] = useState(false);
   const sidebarRef = useRef<HTMLElement>(null);
-  const edgeTriggerRef = useRef<HTMLDivElement>(null);
 
-  // Auto-show on desktop via hover; mobile uses isOpen from parent
+  // Auto-show on desktop via hover if viewport is medium-ish; mobile uses isOpen
   const isVisible = isOpen || hovered;
 
-  const handleMouseEnterSidebar = useCallback(() => setHovered(true), []);
-  const handleMouseLeaveSidebar = useCallback(() => setHovered(false), []);
-  const handleEdgeEnter = useCallback(() => setHovered(true), []);
-
-  // Close hovered state when route changes on mobile
+  // Handles closing on mobile when route changes
   useEffect(() => {
-    if (window.innerWidth <= 768 && onClose) {
+    if (window.innerWidth <= 1100 && onClose) {
       onClose();
     }
     setHovered(false);
@@ -44,26 +39,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         onClick={onClose}
       />
 
-      {/* Invisible edge trigger strip */}
+      {/* Edge trigger strip for desktop hover-to-reveal */}
       <div
-        ref={edgeTriggerRef}
         className="sidebar-edge-trigger"
-        onMouseEnter={handleEdgeEnter}
+        onMouseEnter={() => setHovered(true)}
       />
 
       <aside
         ref={sidebarRef}
         className={`sidebar ${isVisible ? 'open' : ''}`}
-        onMouseEnter={handleMouseEnterSidebar}
-        onMouseLeave={handleMouseLeaveSidebar}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
       >
-        {/* Collapsed edge indicator (icons only, visible when sidebar is away) */}
-        <div className="sidebar-collapsed-hint" aria-hidden="true">
-          {menuItems.map((item) => (
-            <span key={item.path} className="hint-icon">{item.icon}</span>
-          ))}
-        </div>
-
         <div className="sidebar-inner">
           {/* Header */}
           <div className="sidebar-header">
@@ -95,7 +82,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 >
                   <span className="nav-icon">{item.icon}</span>
                   <span className="nav-label">{item.label}</span>
-                  {isActive && <span className="nav-active-dot" />}
                 </Link>
               );
             })}
@@ -111,7 +97,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               </div>
             </div>
             <button className="logout-btn">
-              <span className="logout-icon">🚪</span>
               <span>Logout</span>
             </button>
           </div>

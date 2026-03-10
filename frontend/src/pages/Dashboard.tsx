@@ -8,79 +8,92 @@ import './Dashboard.css';
 import { formatCurrency } from '@utils/helpers';
 
 const Dashboard: React.FC = () => {
-  // Fetch dashboard stats with 15-second auto-refresh
   const { data: dashboardData, loading, error, refetch } = useDashboardStats({
     refetchInterval: 15000,
   });
 
-  // Enable real-time simulation updates
   useRealTimeUpdates(true, 15000);
 
   if (loading) {
-    return <div className="loading">Loading dashboard...</div>;
+    return (
+      <div className="dashboard-loading">
+        <div className="loading-spinner"></div>
+        <p>Analyzing your financial data...</p>
+      </div>
+    );
   }
 
   if (error || !dashboardData) {
     return (
-      <div className="error">
-        <p>Failed to load dashboard</p>
-        <button onClick={refetch}>Retry</button>
+      <div className="dashboard-error">
+        <div className="error-icon">⚠️</div>
+        <h3>Unable to Load Dashboard</h3>
+        <p>Something went wrong while fetching your recent activity.</p>
+        <button className="retry-btn" onClick={refetch}>Try Again</button>
       </div>
     );
   }
 
   return (
     <div className="dashboard-page">
-      <div className="page-header">
-        <h1>Dashboard Overview</h1>
-        <p>Here's what's happening with your accounts today.</p>
-      </div>
+      <header className="page-header">
+        <div className="header-main">
+          <h1>Financial Overview</h1>
+          <p className="header-subtitle">Welcome back! Here's a summary of your activity from the last 30 days.</p>
+        </div>
+        <div className="header-actions">
+           <button className="refresh-btn" onClick={refetch}>Refresh Data</button>
+        </div>
+      </header>
 
       {dashboardData.risk_distribution && dashboardData.risk_distribution.high > 0 && (
-        <div className="alerts-container">
+        <section className="alerts-section">
           <FraudAlertBanner
             riskLevel="high"
-            message={`${dashboardData.risk_distribution.high} suspicious transactions require your immediate attention.`}
+            message={`Urgent: We've identified ${dashboardData.risk_distribution.high} transactions that require your review for potential fraud.`}
           />
-        </div>
+        </section>
       )}
 
-      <div className="dashboard-grid">
-        <Card title="Transaction Volume" className="balance-card">
-          <p className="balance-amount">
-            {formatCurrency(dashboardData.total_volume || 0)}
-          </p>
-          <p className="card-subtext">Total volume over the last 30 days</p>
+      <section className="metrics-grid">
+        <Card title="Total Volume" className="metric-card volume">
+          <div className="metric-value">{formatCurrency(dashboardData.total_volume || 0)}</div>
+          <p className="metric-label">Aggregated funds processed this month</p>
         </Card>
 
-        <Card title="Transactions" className="score-card">
-          <p className="credit-score">{dashboardData.transaction_count || 0}</p>
-          <p className="score-label">Total processed this month</p>
+        <Card title="Transaction Count" className="metric-card count">
+          <div className="metric-value">{dashboardData.transaction_count || 0}</div>
+          <p className="metric-label">Total number of verified transfers</p>
         </Card>
 
-        <Card title="Suspicious Activity" className="loans-card">
-          <p className="active-loans">{dashboardData.fraud_alerts_count || 0}</p>
-          <p className="loans-label">Flagged transactions to review</p>
+        <Card title="Security Alerts" className="metric-card security">
+          <div className="metric-value danger-text">{dashboardData.fraud_alerts_count || 0}</div>
+          <p className="metric-label">Flagged events needing attention</p>
         </Card>
 
-        <Card title="System Status" className="status-card">
-          <p className="status-badge verified">✓ Active & Monitoring</p>
-          <p className="status-label">Fraud detection system</p>
+        <Card title="Monitoring" className="metric-card status">
+          <div className="status-indicator">
+            <span className="pulse-dot"></span>
+            <span className="status-text">Live Guard Active</span>
+          </div>
+          <p className="metric-label">Continuous fraud protection is on</p>
         </Card>
-      </div>
+      </section>
 
-      <div className="dashboard-content">
-        <div className="left-section">
+      <div className="dashboard-layout">
+        <main className="recent-activity">
           <Card title="Recent Transactions">
             {dashboardData.recent_transactions && dashboardData.recent_transactions.length > 0 ? (
               <TransactionList transactions={dashboardData.recent_transactions} />
             ) : (
-              <p className="empty-state">No transactions yet</p>
+              <div className="empty-transactions">
+                <p>No recent transactions recorded.</p>
+              </div>
             )}
           </Card>
-        </div>
+        </main>
 
-        <div className="right-section">
+        <aside className="insights-panel">
           {dashboardData.trends && (
             <SpendingInsightsWidget
               insights={{
@@ -94,7 +107,7 @@ const Dashboard: React.FC = () => {
               }}
             />
           )}
-        </div>
+        </aside>
       </div>
     </div>
   );

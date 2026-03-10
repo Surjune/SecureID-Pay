@@ -92,19 +92,21 @@ class MockApiService {
     }
   }
 
-  async updateFraudAlertStatus(
-    alertId: string,
-    status: 'reviewed' | 'approved' | 'blocked'
-  ) {
-    try {
-      const response = await this.api.put(`/fraud-alerts/${alertId}`, { status });
-      return response.data;
-    } catch (error) {
-      console.error(`Error updating fraud alert ${alertId}:`, error);
-      throw error;
-    }
-  }
+async updateFraudAlertStatus(
+  alertId: string,
+  status: 'reviewed' | 'approved' | 'blocked'
+) {
+  try {
+    const response = await this.api.put(`/fraud-alerts/${alertId}`, {
+      status
+    });
 
+    return response.data;
+  } catch (error) {
+    console.error(`Error updating fraud alert ${alertId}:`, error);
+    throw error;
+  }
+}
   // ====== Credit Score Endpoints ======
   async fetchCreditScores() {
     try {

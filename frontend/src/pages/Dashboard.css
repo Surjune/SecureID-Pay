@@ -1,246 +1,221 @@
-/* ============================================
-   Dashboard Page
-   ============================================ */
-
 .dashboard-page {
-  padding: 28px 32px;
-  animation: pageEnter 400ms cubic-bezier(0.4, 0, 0.2, 1) both;
-}
-
-@keyframes pageEnter {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
+  animation: fadeIn var(--transition-slow);
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 /* ── Header ── */
 .page-header {
-  margin-bottom: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+  gap: 1.5rem;
 }
 
-.page-header h1 {
-  margin: 0 0 6px 0;
-  font-size: 1.75rem;
+.header-main h1 {
+  font-size: 1.875rem;
   font-weight: 800;
-  color: #0f172a;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
   letter-spacing: -0.04em;
 }
 
-.page-header p {
-  margin: 0;
-  color: #64748b;
-  font-size: 0.95rem;
-}
-
-/* ── States ── */
-.loading,
-.error {
-  text-align: center;
-  padding: 60px 20px;
-  color: #64748b;
+.header-subtitle {
+  color: var(--text-tertiary);
   font-size: 1rem;
 }
 
-.alerts-container {
-  margin-bottom: 24px;
+.refresh-btn {
+  padding: 0.625rem 1.25rem;
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all var(--transition-fast);
+}
+
+.refresh-btn:hover {
+  border-color: var(--primary-light);
+  color: var(--primary-color);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Alerts ── */
+.alerts-section {
+  margin-bottom: 2rem;
 }
 
 /* ── Metrics Grid ── */
-.dashboard-grid {
+.metrics-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-  margin-bottom: 28px;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
 }
 
-.balance-card,
-.score-card,
-.loans-card,
-.status-card {
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+.metric-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 140px;
 }
 
-/* Colored top accent per card */
-.balance-card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
-  border-radius: 16px 16px 0 0;
-}
-
-.score-card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #22c55e, #10b981);
-  border-radius: 16px 16px 0 0;
-}
-
-.loans-card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #8b5cf6, #a78bfa);
-  border-radius: 16px 16px 0 0;
-}
-
-.status-card::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #0ea5e9, #38bdf8);
-  border-radius: 16px 16px 0 0;
-}
-
-/* Card entrance animations */
-.dashboard-grid > *:nth-child(1) { animation: cardEnter 450ms ease 80ms  both; }
-.dashboard-grid > *:nth-child(2) { animation: cardEnter 450ms ease 140ms both; }
-.dashboard-grid > *:nth-child(3) { animation: cardEnter 450ms ease 200ms both; }
-.dashboard-grid > *:nth-child(4) { animation: cardEnter 450ms ease 260ms both; }
-
-@keyframes cardEnter {
-  from { opacity: 0; transform: translateY(20px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0)    scale(1); }
-}
-
-/* ── Metric Values ── */
-.balance-amount {
-  margin: 4px 0 0;
-  font-size: 2rem;
+.metric-value {
+  font-size: 2.25rem;
   font-weight: 800;
-  letter-spacing: -0.04em;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  letter-spacing: -0.05em;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.volume .metric-value {
+  background: linear-gradient(135deg, var(--primary-color), var(--accent-purple));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.credit-score {
-  margin: 4px 0 0;
-  font-size: 2.6rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  background: linear-gradient(135deg, #22c55e, #10b981);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+.danger-text {
+  color: var(--danger-color) !important;
 }
 
-.score-label,
-.loans-label {
-  margin: 6px 0 0;
-  color: #94a3b8;
-  font-size: 0.82rem;
+.metric-label {
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
   font-weight: 500;
-  letter-spacing: 0.03em;
 }
 
-.active-loans {
-  margin: 4px 0 0;
-  font-size: 2.6rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.status-badge {
-  margin: 0 0 10px;
-  padding: 6px 14px;
-  border-radius: 20px;
-  display: inline-flex;
+/* Status Indicator Card */
+.status-indicator {
+  display: flex;
   align-items: center;
-  gap: 6px;
-  font-weight: 600;
-  font-size: 0.85rem;
+  gap: 10px;
+  margin-bottom: 0.75rem;
 }
 
-.status-badge.verified {
-  background: #dcfce7;
-  color: #15803d;
-  border: 1px solid #bbf7d0;
+.status-text {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--success-color);
 }
 
-.status-label {
-  margin: 4px 0 0;
-  color: #94a3b8;
-  font-size: 0.82rem;
+.pulse-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--success-color);
+  border-radius: 50%;
+  box-shadow: 0 0 0 rgba(34, 197, 94, 0.4);
+  animation: pulseGreen 2s infinite;
 }
 
-/* ── Content Area ── */
-.dashboard-content {
+@keyframes pulseGreen {
+  0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/* ── Content Layout ── */
+.dashboard-layout {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
+  grid-template-columns: 1.8fr 1fr;
+  gap: 1.5rem;
 }
 
-.dashboard-content > * {
-  animation: cardEnter 500ms ease 320ms both;
+.recent-activity {
+  min-width: 0; /* Fix flex overflow */
 }
 
-.dashboard-content > *:nth-child(2) {
-  animation-delay: 380ms;
+/* Staggered Entrance Animations */
+.metrics-grid > .metric-card:nth-child(1) { animation: slideInUp var(--transition-slow) 0.1s both; }
+.metrics-grid > .metric-card:nth-child(2) { animation: slideInUp var(--transition-slow) 0.15s both; }
+.metrics-grid > .metric-card:nth-child(3) { animation: slideInUp var(--transition-slow) 0.2s both; }
+.metrics-grid > .metric-card:nth-child(4) { animation: slideInUp var(--transition-slow) 0.25s both; }
+
+.recent-activity { animation: fadeIn var(--transition-slow) 0.4s both; }
+.insights-panel { animation: fadeIn var(--transition-slow) 0.5s both; }
+
+/* ── States ── */
+.dashboard-loading, .dashboard-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem;
+  text-align: center;
+  color: var(--text-tertiary);
 }
 
-.left-section,
-.right-section {
-  min-height: 200px;
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--border-color);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spinnerRotate 1s linear infinite;
+  margin-bottom: 1.5rem;
+}
+
+.error-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.retry-btn {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 10px;
+  font-weight: 600;
 }
 
 /* ── Responsive ── */
 @media (max-width: 1200px) {
-  .dashboard-grid {
+  .metrics-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 1024px) {
-  .dashboard-content {
+  .dashboard-layout {
     grid-template-columns: 1fr;
+  }
+  
+  .insights-panel {
+    order: -1; /* Show insights above transactions on smaller tablets */
   }
 }
 
 @media (max-width: 768px) {
-  .dashboard-page { padding: 20px 16px; }
-
-  .page-header h1 { font-size: 1.4rem; }
-
-  .dashboard-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .header-actions {
+    width: 100%;
+  }
+  
+  .refresh-btn {
+    width: 100%;
   }
 
-  .balance-amount { font-size: 1.7rem; }
-  .credit-score   { font-size: 2rem; }
-  .active-loans   { font-size: 2rem; }
+  .metric-value {
+    font-size: 1.75rem;
+  }
 }
 
 @media (max-width: 480px) {
-  .dashboard-page { padding: 14px 12px; }
-
-  .page-header h1 { font-size: 1.25rem; }
-  .page-header p  { font-size: 0.87rem; }
-
-  .dashboard-grid {
+  .metrics-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
-    margin-bottom: 18px;
+    gap: 1rem;
   }
-
-  .balance-amount { font-size: 1.5rem; }
-  .credit-score   { font-size: 1.75rem; }
-  .active-loans   { font-size: 1.5rem; }
-
-  .dashboard-content { gap: 14px; }
-
-  .left-section,
-  .right-section { min-height: auto; }
+  
+  .header-main h1 {
+    font-size: 1.5rem;
+  }
 }

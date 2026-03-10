@@ -92,9 +92,9 @@ const Lending: React.FC = () => {
         </button>
       </div>
 
-      <div className="tab-content">
+      <div className="tab-content fade-in">
         {activeTab === 'apply' && (
-          <Card title="Loan Application" className="full-width">
+          <Card title="Start a New Application" className="full-width">
             <LoanApplicationForm onSuccess={handleApplySuccess} />
           </Card>
         )}
@@ -102,26 +102,26 @@ const Lending: React.FC = () => {
         {activeTab === 'active' && (
           <div className="loans-container">
             {loading ? (
-              <p>Loading information...</p>
+              <div className="loading-state">Finding your active lines of credit...</div>
             ) : (
               <>
                 {creditScore && (
-                  <Card title="Credit Profile" className="loan-card">
+                  <Card title="Your Credit Profile" className="loan-card animate-in">
                     <div className="loan-details">
                       <div className="loan-item">
-                        <span className="label">Credit Score:</span>
-                        <span className="value">{creditScore.score}</span>
+                        <span className="label">Current Score:</span>
+                        <span className="value score-accent">{creditScore.score}</span>
                       </div>
                       <div className="loan-item">
-                        <span className="label">Eligibility Tier:</span>
-                        <span className="value">{creditScore.eligibility_tier}</span>
+                        <span className="label">Credit Tier:</span>
+                        <span className="value tier-badge">{creditScore.eligibility_tier}</span>
                       </div>
                       <div className="loan-item">
-                        <span className="label">Interest Rate Offered:</span>
-                        <span className="value">{creditScore.interest_rate}%</span>
+                        <span className="label">Your Base Rate:</span>
+                        <span className="value">{creditScore.interest_rate}% APR</span>
                       </div>
                       <div className="loan-item">
-                        <span className="label">Last Updated:</span>
+                        <span className="label">Profile Updated:</span>
                         <span className="value">{new Date(creditScore.updated_at).toLocaleDateString()}</span>
                       </div>
                     </div>
@@ -129,32 +129,32 @@ const Lending: React.FC = () => {
                 )}
 
                 {fraudAlerts && fraudAlerts.alerts && fraudAlerts.alerts.length > 0 && (
-                  <Card title="Security Status" className="loan-card">
-                    <p className="warning">⚠️ {fraudAlerts.alerts.length} security notices found</p>
+                  <Card title="Security Status" className="loan-card warning-card">
+                    <p className="warning">⚠️ We've found {fraudAlerts.alerts.length} security notices that might affect your rates.</p>
                   </Card>
                 )}
                 {loansLoading ? (
-                  <p>Loading your loans...</p>
+                  <p>Fetching loan details...</p>
                 ) : loans.length > 0 ? (
                   <div className="active-loans-list">
                     {loans.map(loan => (
-                      <Card key={loan.id} title={`Personal Loan`} className="loan-card active-loan">
+                      <Card key={loan.id} title={`Active Personal Loan`} className="loan-card active-loan animate-in">
                         <div className="loan-details">
                           <div className="loan-item">
-                            <span className="label">Amount:</span>
+                            <span className="label">Borrowed Amount:</span>
                             <span className="value">{formatCurrency(loan.amount)}</span>
                           </div>
                           <div className="loan-item">
-                            <span className="label">Status:</span>
+                            <span className="label">Current Status:</span>
                             <span className="value status-approved">{loan.status}</span>
                           </div>
                           <div className="loan-item">
-                            <span className="label">Rate:</span>
+                            <span className="label">Fixed Rate:</span>
                             <span className="value">{loan.interest_rate}%</span>
                           </div>
                           <div className="loan-item">
-                            <span className="label">Duration:</span>
-                            <span className="value">{loan.duration_months} mo</span>
+                            <span className="label">Remaining Term:</span>
+                            <span className="value">{loan.duration_months} months</span>
                           </div>
                         </div>
                       </Card>
@@ -162,7 +162,7 @@ const Lending: React.FC = () => {
                   </div>
                 ) : (
                   <Card className="loan-card empty-card">
-                    <p className="empty-message">You have no active loans.</p>
+                    <p className="empty-message">You don't have any active loans at the moment.</p>
                   </Card>
                 )}
               </>
@@ -171,24 +171,24 @@ const Lending: React.FC = () => {
         )}
 
         {activeTab === 'eligibility' && eligibility && (
-          <Card title="Loan Eligibility" className="full-width">
+          <Card title="Your Personalized Loan Offerings" className="full-width fade-in">
             <div className="eligibility-details">
               <div className="eligibility-item">
-                <span className="label">Eligibility Status:</span>
+                <span className="label">What you qualify for:</span>
                 <span className={`status ${eligibility.eligible ? 'eligible' : 'not-eligible'}`}>
-                  {eligibility.eligible ? 'Eligible' : 'Not Eligible'}
+                  {eligibility.eligible ? 'Successfully Qualified' : 'Action Required to Qualify'}
                 </span>
               </div>
               <div className="eligibility-item">
-                <span className="label">Max Loan Amount:</span>
+                <span className="label">Possible Credit Limit:</span>
                 <span className="value">{formatCurrency(eligibility.max_amount)}</span>
               </div>
               <div className="eligibility-item">
-                <span className="label">Interest Rate Range:</span>
+                <span className="label">Estimated APR Range:</span>
                 <span className="value">{eligibility.min_rate}% - {eligibility.max_rate}%</span>
               </div>
               <div className="eligibility-item">
-                <span className="label">Max Duration:</span>
+                <span className="label">Maximum Repayment Period:</span>
                 <span className="value">{eligibility.max_duration} months</span>
               </div>
               <p className="eligibility-reason">{eligibility.reason}</p>
