@@ -97,8 +97,8 @@ async updateFraudAlertStatus(
   status: 'reviewed' | 'approved' | 'blocked'
 ) {
   try {
-    const response = await this.api.put(`/fraud-alerts/${alertId}`, {
-      status
+    const response = await this.api.put(`/fraud-alerts/${alertId}`, null, {
+      params: { status }
     });
 
     return response.data;
